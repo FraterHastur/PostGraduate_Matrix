@@ -102,8 +102,8 @@ class LU_decay:
             input_matrix_b = self.make_ly(input_matrix_a, self.input_matrix_b)
         else:
             input_matrix_b = input_matrix_b.astype(np.float)
-
-        return np.linalg.solve(input_matrix_a, input_matrix_b)
+        x_sol = np.linalg.solve(input_matrix_a, input_matrix_b)
+        return x_sol
 
     def make_lu_solve(self, input_matrix_a=None, input_matrix_b=None):
         if input_matrix_a is None:
@@ -120,12 +120,15 @@ class LU_decay:
             u_matrix = self.make_u_matrix(input_matrix_a)
             l_matrix = self.make_l_matrix(input_matrix_a)
             l_solve = self.make_ly(l_matrix, input_matrix_b)
+            print(f'Ly= {l_solve}')
             u_solve = self.make_ux(u_matrix, l_solve)
             return u_solve
 
 
 if __name__ == '__main__':
-    matrix = np.array([[2, 1, -1], [4, -6, -2], [-2, 7, -3]])
-    matrix2 = np.array([[5, -2, 7]])
+    matrix = np.array([[2, 1, 3], [11, 7, 5], [9, 8, 4]])
+    matrix2 = np.array([[1, -6, -5]])
     test = LU_decay(matrix, matrix2)
+    print(test.make_l_matrix())
+    print(test.make_u_matrix())
     print(test.make_lu_solve())
